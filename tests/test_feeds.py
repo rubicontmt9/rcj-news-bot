@@ -93,6 +93,47 @@ class ParseFeedTest(unittest.TestCase):
         self.assertEqual(len(entries), 2)
 
 
+class SanitizeTest(unittest.TestCase):
+    """実際のフィードに混ざる壊れた XML を読めるようにする。"""
+
+    def test_bare_ampersand_is_recovered(self):
+        broken = """<?xml version="1.0"?><rss version="2.0"><channel>
+          <item><title>サッカー & オンステージ 合同説明会</title>
+          <link>https://www.robocup.or.jp/robocup-junior/a</link></item>
+        </channel></rss>"""
+        entries = feeds.parse_feed(broken)
+        self.assertEqual(len(entries), 1)
+        self.assertIn("&", entries[0].title)
+
+    def test_control_characters_are_removed(self):
+        broken = '<?xml version="1.0"?><rss version="2.0"><channel>' \
+            "<item><title>ルール\x0b更新</title><link>https://x/a</link></item>" \
+            "</channel></rss>"
+        entries = feeds.parse_feed(broken)
+        self.assertEqual(entries[0].title, "ルール更新")
+
+    def test_garbage_before_declaration_is_dropped(self):
+        broken = 'Warning: something\n<?xml version="1.0"?><rss version="2.0">' \
+            "<channel><item><title>お知らせ</title><link>https://x/a</link>" \
+            "</item></channel></rss>"
+        entries = feeds.parse_feed(broken)
+        self.assertEqual(len(entries), 1)
+
+    def test_valid_feed_is_untouched(self):
+        self.assertEqual(len(feeds.parse_feed(RSS)), 2)
+
+    def test_unrecoverable_still_raises(self):
+        with self.assertRaises(feeds.FeedParseError):
+            feeds.parse_feed("<rss><channel><item><title>a</title></channel>")
+
+    def test_existing_entities_are_preserved(self):
+        text = '<?xml version="1.0"?><rss version="2.0"><channel><item>' \
+            "<title>A &amp; B &#38; C</title><link>https://x/a</link>" \
+            "</item></channel></rss>"
+        entries = feeds.parse_feed(text)
+        self.assertEqual(entries[0].title, "A & B & C")
+
+
 class ParseDatetimeTest(unittest.TestCase):
     def test_rfc822(self):
         value = feeds.parse_datetime("Tue, 11 Aug 2026 09:00:00 +0900")

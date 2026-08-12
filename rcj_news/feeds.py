@@ -119,6 +119,31 @@ class FeedEntry:
         return f"FeedEntry(title={self.title!r}, url={self.url!r})"
 
 
+#: XML として不正な制御文字（実在のフィードに混ざっていることがある）
+_CONTROL_CHARS = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
+#: 実体参照になっていない生の & （`a & b` のような本文でよく壊れる）
+_BARE_AMPERSAND = re.compile(
+    r"&(?!(?:#\d+|#x[0-9a-fA-F]+|[a-zA-Z][a-zA-Z0-9]{1,31});)"
+)
+
+
+def sanitize_xml(text: str) -> str:
+    """XML として読めないフィードを、読める形に寄せる。
+
+    RSS を手書き／古い CMS で吐いているサイトでは、生の ``&`` や制御文字が
+    混ざって XML パーサが落ちることがある。配信を止めるほどの問題ではないので
+    直してから読み直す。
+    """
+    # 宣言より前にゴミ（BOM や空行、HTML の警告文）があると解析できない
+    start = text.find("<?xml")
+    if start < 0:
+        start = text.find("<")
+    if start > 0:
+        text = text[start:]
+    text = _CONTROL_CHARS.sub("", text)
+    return _BARE_AMPERSAND.sub("&amp;", text)
+
+
 _ENTRY_TAGS = {"item", "entry"}
 _TITLE_TAGS = ("title",)
 _DATE_TAGS = ("pubdate", "published", "updated", "date", "modified", "created")
@@ -132,8 +157,14 @@ def parse_feed(xml_text: str) -> list[FeedEntry]:
         raise FeedParseError("空のレスポンス")
     try:
         root = ElementTree.fromstring(text)
-    except ElementTree.ParseError as exc:
-        raise FeedParseError(f"XML として解析できません: {exc}") from exc
+    except ElementTree.ParseError as first_error:
+        # 生の & や制御文字を直して一度だけ読み直す
+        try:
+            root = ElementTree.fromstring(sanitize_xml(text))
+        except ElementTree.ParseError:
+            raise FeedParseError(
+                f"XML として解析できません: {first_error}"
+            ) from first_error
 
     entries: list[FeedEntry] = []
     # RSS は channel/item、Atom は feed/entry、RDF は rdf:RDF/item と階層が違うので

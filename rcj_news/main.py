@@ -15,6 +15,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from . import render
+from .classify import normalize
 from .collect import Collector
 from .discord import DiscordError, post_messages
 from .models import Item, SourceResult
@@ -62,6 +63,29 @@ def find_webhook_url(explicit: str | None = None) -> str | None:
         if value:
             return value
     return None
+
+
+def dedupe_across_sources(items: list[Item], config: dict) -> list[Item]:
+    """同じお知らせが複数の情報源に出た場合、1 件だけ残す。
+
+    千葉ノードの記事が関東ブロックのサイトにも載る（URL は別）ことがあるため、
+    タイトルで重ね合わせ、より地元の地域（設定の並び順が先）を残す。
+    """
+    order = {
+        region["id"]: index for index, region in enumerate(config.get("regions", []))
+    }
+    best: dict[str, Item] = {}
+    for item in items:
+        key = normalize(item.title)
+        if not key:
+            best[item.url] = item
+            continue
+        current = best.get(key)
+        if current is None or order.get(item.region, 999) < order.get(current.region, 999):
+            best[key] = item
+
+    kept = {id(item) for item in best.values()}
+    return [item for item in items if id(item) in kept]
 
 
 def select_new_items(
@@ -173,6 +197,7 @@ def main(argv: list[str] | None = None) -> int:
         prefix_note = "（初回実行のため、各情報源の最新数件のみ表示しています）"
 
     items, dropped = select_new_items(results, state, options, force=args.force)
+    items = dedupe_across_sources(items, config)
 
     truncated_note = None
     source_truncated = sum(result.truncated for result in results)

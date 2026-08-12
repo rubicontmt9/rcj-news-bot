@@ -1,3 +1,5 @@
+import contextlib
+import io
 import json
 import os
 import tempfile
@@ -191,6 +193,57 @@ class SelectNewItemsTest(unittest.TestCase):
         self.assertIsNone(items[-1].published)
 
 
+class DedupeAcrossSourcesTest(unittest.TestCase):
+    """同じお知らせが千葉と関東の両方に載ることがある。"""
+
+    def item(self, region, title, url):
+        return Item(
+            source_id=region,
+            source_name=region,
+            region=region,
+            title=title,
+            url=url,
+            published=datetime(2026, 5, 6, tzinfo=timezone.utc),
+        )
+
+    def test_same_title_keeps_most_local_region(self):
+        items = [
+            self.item("kanto", "2027千葉・大会日程", "https://rcjj-kanto.org/blog/1"),
+            self.item("chiba", "2027千葉・大会日程", "https://rcjj-kanto.org/chiba/archives/2546"),
+        ]
+        kept = main_module.dedupe_across_sources(items, CONFIG)
+        self.assertEqual(len(kept), 1)
+        self.assertEqual(kept[0].region, "chiba")
+
+    def test_different_titles_are_both_kept(self):
+        items = [
+            self.item("chiba", "千葉ノード大会", "https://x/1"),
+            self.item("kanto", "関東ブロック大会", "https://x/2"),
+        ]
+        self.assertEqual(len(main_module.dedupe_across_sources(items, CONFIG)), 2)
+
+    def test_title_comparison_ignores_width_and_case(self):
+        items = [
+            self.item("world", "OnStage Rules 2026", "https://x/1"),
+            self.item("japan", "ＯｎＳｔａｇｅ　Ｒｕｌｅｓ　2026", "https://x/2"),
+        ]
+        kept = main_module.dedupe_across_sources(items, CONFIG)
+        self.assertEqual(len(kept), 1)
+        self.assertEqual(kept[0].region, "japan")
+
+    def test_original_order_is_preserved(self):
+        items = [
+            self.item("world", "C", "https://x/3"),
+            self.item("chiba", "A", "https://x/1"),
+            self.item("kanto", "B", "https://x/2"),
+        ]
+        kept = main_module.dedupe_across_sources(items, CONFIG)
+        self.assertEqual([item.title for item in kept], ["C", "A", "B"])
+
+    def test_empty_input(self):
+        self.assertEqual(main_module.dedupe_across_sources([], CONFIG), [])
+
+
 class MainCliTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -205,8 +258,10 @@ class MainCliTest(unittest.TestCase):
             "--state", str(self.state_path),
             *extra_args,
         ]
+        # 実行ログでテストの出力と本番の出力が混ざらないように捨てる
         with mock.patch.object(main_module.Collector, "collect", return_value=results):
-            return main_module.main(args)
+            with contextlib.redirect_stdout(io.StringIO()):
+                return main_module.main(args)
 
     def test_dry_run_does_not_post_or_save(self):
         with mock.patch("rcj_news.main.post_messages") as poster:
