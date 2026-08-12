@@ -1,0 +1,292 @@
+{
+  "_readme": "ロボカップジュニアのニュース／ルール情報の収集元設定。URL が変わったらこのファイルだけを直せば直ります。urls は候補リストで、上から順に試して最初に成功したものを使います。",
+
+  "timezone": "Asia/Tokyo",
+
+  "options": {
+    "max_age_days": 210,
+    "max_items_per_source": 8,
+    "max_items_total": 40,
+    "first_run_items_per_source": 3,
+    "post_when_empty": true,
+    "include_general": true,
+    "http_timeout": 20,
+    "http_retries": 2,
+    "total_time_budget": 600
+  },
+
+  "leagues": {
+    "soccer": {
+      "label": "サッカー",
+      "emoji": "⚽",
+      "keywords": [
+        "サッカー", "ｻｯｶｰ", "soccer", "lightweight", "ライトウェイト",
+        "オープン", "open league", "ドリブラー", "dribbler",
+        "日本リーグ", "ワールドリーグ", "world league"
+      ]
+    },
+    "onstage": {
+      "label": "オンステージ",
+      "emoji": "🎭",
+      "keywords": [
+        "オンステージ", "ｵﾝｽﾃｰｼﾞ", "onstage", "on stage", "on-stage",
+        "ステージ", "ダンス", "dance", "パフォーマンス", "performance"
+      ]
+    }
+  },
+
+  "general": {
+    "label": "全般",
+    "emoji": "📢"
+  },
+
+  "exclude_keywords": [
+    "レスキュー", "ﾚｽｷｭｰ", "rescue", "rescue line", "rescue maze",
+    "ライントレース", "シミュレーション", "simulation", "sim demo",
+    "@home", "industrial", "ロボカップアジアパシフィック レスキュー"
+  ],
+
+  "regions": [
+    { "id": "chiba", "label": "千葉", "emoji": "🏫", "color": 3066993, "order": 1 },
+    { "id": "kanto", "label": "関東", "emoji": "🗼", "color": 3447003, "order": 2 },
+    { "id": "japan", "label": "日本", "emoji": "🇯🇵", "color": 15158332, "order": 3 },
+    { "id": "world", "label": "世界", "emoji": "🌏", "color": 10181046, "order": 4 }
+  ],
+
+  "sources": [
+    {
+      "id": "chiba-node-news",
+      "region": "chiba",
+      "name": "千葉ノードニュース",
+      "kind": "feed",
+      "enabled": true,
+      "urls": [
+        "https://rcjj-kanto.org/chiba/feed/",
+        "https://rcjj-kanto.org/chiba/?feed=rss2",
+        "https://rcjj-kanto.org/chiba/feed/atom/"
+      ],
+      "site": "https://rcjj-kanto.org/chiba/",
+      "html_fallback": {
+        "url": "https://rcjj-kanto.org/chiba/",
+        "link_must_contain": ["/chiba/archives/"]
+      }
+    },
+    {
+      "id": "kanto-block-news",
+      "region": "kanto",
+      "name": "関東ブロックニュース",
+      "kind": "feed",
+      "enabled": true,
+      "urls": [
+        "https://rcjj-kanto.org/kanto/feed/",
+        "https://rcjj-kanto.org/kanto/?feed=rss2",
+        "https://rcjj-kanto.org/kanto/feed/atom/"
+      ],
+      "site": "https://rcjj-kanto.org/kanto/",
+      "html_fallback": {
+        "url": "https://rcjj-kanto.org/kanto/",
+        "link_must_contain": ["/kanto/archives/"]
+      }
+    },
+    {
+      "id": "kanto-info",
+      "region": "kanto",
+      "name": "関東ブロック お知らせ",
+      "kind": "feed",
+      "enabled": true,
+      "urls": [
+        "https://rcjj-kanto.org/feed/",
+        "https://rcjj-kanto.org/?feed=rss2"
+      ],
+      "site": "https://rcjj-kanto.org/news/",
+      "html_fallback": {
+        "url": "https://rcjj-kanto.org/news/",
+        "link_must_contain": ["rcjj-kanto.org"],
+        "link_must_not_contain": ["/category/", "/tag/", "/author/", "/feed", "wp-content", "wp-login"],
+        "min_title_length": 6
+      }
+    },
+    {
+      "id": "kanto-rules",
+      "region": "kanto",
+      "name": "関東ブロック 競技ルール",
+      "kind": "watch",
+      "enabled": true,
+      "urls": ["https://rcjj-kanto.org/rule/"],
+      "site": "https://rcjj-kanto.org/rule/"
+    },
+
+    {
+      "id": "japan-top",
+      "region": "japan",
+      "name": "ロボカップジュニアジャパン",
+      "kind": "html",
+      "enabled": true,
+      "urls": ["https://www.robocupjunior.jp/"],
+      "site": "https://www.robocupjunior.jp/",
+      "link_must_contain": ["robocupjunior.jp", "drive.google.com", "docs.google.com"],
+      "link_must_not_contain": [
+        "/info.html", "/regional-block.html", "/index.html", "/link.html",
+        "/contact", "/privacy", "/sitemap", "/inquiry", "mailto:", "wp-content"
+      ],
+      "min_title_length": 6
+    },
+    {
+      "id": "japan-rules",
+      "region": "japan",
+      "name": "ジャパン 競技ルール",
+      "kind": "html",
+      "enabled": true,
+      "urls": [
+        "https://www.robocupjunior.jp/2026aichi_rule.html",
+        "https://www.robocupjunior.jp/rule.html",
+        "https://www.robocupjunior.jp/2025nagoya_rule.html"
+      ],
+      "site": "https://www.robocupjunior.jp/",
+      "link_must_contain": [".pdf", "drive.google.com", "docs.google.com"],
+      "min_title_length": 4
+    },
+    {
+      "id": "japan-docs",
+      "region": "japan",
+      "name": "ジャパン 公開資料",
+      "kind": "html",
+      "enabled": true,
+      "urls": ["https://www.robocupjunior.jp/documentations.html"],
+      "site": "https://www.robocupjunior.jp/documentations.html",
+      "link_must_contain": [".pdf", "drive.google.com", "docs.google.com"],
+      "min_title_length": 4
+    },
+    {
+      "id": "rjc-junior",
+      "region": "japan",
+      "name": "ロボカップ日本委員会",
+      "kind": "feed",
+      "enabled": true,
+      "urls": [
+        "https://www.robocup.or.jp/feed/",
+        "https://www.robocup.or.jp/?feed=rss2"
+      ],
+      "site": "https://www.robocup.or.jp/robocup-junior/",
+      "link_must_contain": ["/robocup-junior/", "junior"],
+      "include_general": false
+    },
+
+    {
+      "id": "world-news",
+      "region": "world",
+      "name": "RoboCupJunior International",
+      "kind": "feed",
+      "enabled": true,
+      "urls": [
+        "https://junior.robocup.org/feed/",
+        "https://junior.robocup.org/?feed=rss2"
+      ],
+      "site": "https://junior.robocup.org/",
+      "html_fallback": {
+        "url": "https://junior.robocup.org/",
+        "link_must_contain": ["junior.robocup.org"],
+        "link_must_not_contain": ["/category/", "/tag/", "/author/", "wp-content", "#"],
+        "min_title_length": 8
+      }
+    },
+    {
+      "id": "world-soccer-rules-commits",
+      "region": "world",
+      "name": "国際ルール更新 (Soccer)",
+      "kind": "feed",
+      "enabled": true,
+      "forced_leagues": ["soccer"],
+      "max_items_per_source": 4,
+      "urls": [
+        "https://github.com/robocup-junior/soccer-rules/commits/main.atom",
+        "https://github.com/robocup-junior/soccer-rules/commits/master.atom"
+      ],
+      "site": "https://robocup-junior.github.io/soccer-rules/",
+      "title_must_not_contain": ["Merge branch", "Merge remote-tracking"]
+    },
+    {
+      "id": "world-soccer-rules-releases",
+      "region": "world",
+      "name": "国際ルール公開版 (Soccer)",
+      "kind": "feed",
+      "enabled": true,
+      "forced_leagues": ["soccer"],
+      "urls": ["https://github.com/robocup-junior/soccer-rules/releases.atom"],
+      "site": "https://robocup-junior.github.io/soccer-rules/"
+    },
+    {
+      "id": "world-onstage-rules-commits",
+      "region": "world",
+      "name": "国際ルール更新 (OnStage)",
+      "kind": "feed",
+      "enabled": true,
+      "forced_leagues": ["onstage"],
+      "max_items_per_source": 4,
+      "urls": [
+        "https://github.com/robocup-junior/onstage-rules/commits/main.atom",
+        "https://github.com/robocup-junior/onstage-rules/commits/master.atom"
+      ],
+      "site": "https://robocup-junior.github.io/onstage-rules/",
+      "title_must_not_contain": ["Merge branch", "Merge remote-tracking"]
+    },
+    {
+      "id": "world-onstage-rules-releases",
+      "region": "world",
+      "name": "国際ルール公開版 (OnStage)",
+      "kind": "feed",
+      "enabled": true,
+      "forced_leagues": ["onstage"],
+      "urls": ["https://github.com/robocup-junior/onstage-rules/releases.atom"],
+      "site": "https://robocup-junior.github.io/onstage-rules/"
+    },
+    {
+      "id": "world-general-rules-commits",
+      "region": "world",
+      "name": "国際ルール更新 (General)",
+      "kind": "feed",
+      "enabled": true,
+      "forced_leagues": [],
+      "max_items_per_source": 3,
+      "urls": [
+        "https://github.com/robocup-junior/general-rules/commits/main.atom",
+        "https://github.com/robocup-junior/general-rules/commits/master.atom"
+      ],
+      "site": "https://robocup-junior.github.io/general-rules/",
+      "title_must_not_contain": ["Merge branch", "Merge remote-tracking"]
+    },
+    {
+      "id": "world-soccer-page",
+      "region": "world",
+      "name": "国際 Soccer ページ",
+      "kind": "watch",
+      "enabled": true,
+      "forced_leagues": ["soccer"],
+      "urls": [
+        "https://junior.robocup.org/robocupjunior-soccer/",
+        "https://junior.robocup.org/soccer/"
+      ]
+    },
+    {
+      "id": "world-onstage-page",
+      "region": "world",
+      "name": "国際 OnStage ページ",
+      "kind": "watch",
+      "enabled": true,
+      "forced_leagues": ["onstage"],
+      "urls": [
+        "https://junior.robocup.org/robocupjunior-onstage/",
+        "https://junior.robocup.org/onstage/"
+      ]
+    },
+    {
+      "id": "world-general-rules-page",
+      "region": "world",
+      "name": "国際 General Rules ページ",
+      "kind": "watch",
+      "enabled": true,
+      "forced_leagues": [],
+      "urls": ["https://junior.robocup.org/robocupjunior-general-rules/"]
+    }
+  ]
+}
