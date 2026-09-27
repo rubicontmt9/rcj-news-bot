@@ -1,28 +1,28 @@
 {
   "sources": {
     "chiba-node-news": {
-      "last_ok": "2026-09-26T00:28:12.574573+00:00",
+      "last_ok": "2026-09-27T00:23:43.090882+00:00",
       "seen": [
         "173bf41fc65f5cbed1de"
       ],
       "used_url": "https://rcjj-kanto.org/chiba/feed"
     },
     "japan-docs": {
-      "last_ok": "2026-09-26T00:28:22.116712+00:00",
+      "last_ok": "2026-09-27T00:23:51.714027+00:00",
       "seen": [
         "0d4a93700486dfc44cc2"
       ],
       "used_url": "https://www.robocupjunior.jp/documentations.html"
     },
     "japan-rules": {
-      "last_ok": "2026-09-26T00:28:21.058301+00:00",
+      "last_ok": "2026-09-27T00:23:50.689920+00:00",
       "seen": [
         "6462ecb16394a7253f78"
       ],
       "used_url": "https://www.robocupjunior.jp/2026aichi_rule.html"
     },
     "japan-top": {
-      "last_ok": "2026-09-26T00:28:20.060670+00:00",
+      "last_ok": "2026-09-27T00:23:49.465524+00:00",
       "seen": [
         "4c44900c74d2c7e22f13",
         "5a2e460c3626177a80d9",
@@ -33,7 +33,7 @@
       "used_url": "https://www.robocupjunior.jp/"
     },
     "kanto-block-news": {
-      "last_ok": "2026-09-26T00:28:14.745417+00:00",
+      "last_ok": "2026-09-27T00:23:44.821520+00:00",
       "seen": [
         "d5e83f1df4116bc122ae",
         "5abdf02b163a9e8799f8",
@@ -48,7 +48,7 @@
       "used_url": "https://rcjj-kanto.org/kanto/feed"
     },
     "kanto-info": {
-      "last_ok": "2026-09-26T00:28:16.991145+00:00",
+      "last_ok": "2026-09-27T00:23:45.860029+00:00",
       "seen": [
         "88342e3c712b8e117f86"
       ],
@@ -93,7 +93,7 @@
         "https://rcjj-kanto.org/tokyokanagawa2023/",
         "https://rcjj-kanto.org/chiba2023/"
       ],
-      "last_ok": "2026-09-26T00:28:18.079880+00:00",
+      "last_ok": "2026-09-27T00:23:47.083293+00:00",
       "seen": [
         "30035eadb3f4a5bd13c8",
         "6da649e3b30003e8f11e",
@@ -102,14 +102,14 @@
       "used_url": "https://rcjj-kanto.org/rule/"
     },
     "rjc-junior": {
-      "last_ok": "2026-09-26T00:28:24.807526+00:00",
+      "last_ok": "2026-09-27T00:23:53.776613+00:00",
       "seen": [
         "f6c70ee7678c1f214021"
       ],
       "used_url": "https://www.robocup.or.jp/robocup-junior/"
     },
     "world-general-rules-commits": {
-      "last_ok": "2026-09-26T00:28:27.722142+00:00",
+      "last_ok": "2026-09-27T00:23:56.402123+00:00",
       "seen": [
         "b7600a02841580d2f23e",
         "7c73b0961cb443b2aef3",
@@ -124,12 +124,12 @@
         "https://junior.forum.robocup.org/",
         "https://robocup-junior.github.io/general-rules/main/general-rules.pdf"
       ],
-      "last_ok": "2026-09-26T00:28:31.974285+00:00",
+      "last_ok": "2026-09-27T00:24:00.565056+00:00",
       "seen": [],
       "used_url": "https://junior.robocup.org/robocupjunior-general-rules/"
     },
     "world-news": {
-      "last_ok": "2026-09-26T00:28:25.937417+00:00",
+      "last_ok": "2026-09-27T00:23:54.921185+00:00",
       "seen": [
         "24643ffa19cdb403e56e",
         "3da7837aeefb40d0094a",
@@ -171,12 +171,12 @@
         "https://junior.forum.robocup.org/t/questions-about-wifi-communication-protocol/4658",
         "https://junior.forum.robocup.org/t/i-have-a-question-about-the-2024-robocup-competition-team-korea/4444"
       ],
-      "last_ok": "2026-09-26T00:28:31.113502+00:00",
+      "last_ok": "2026-09-27T00:23:59.757103+00:00",
       "seen": [],
       "used_url": "https://junior.robocup.org/onstage/"
     },
     "world-onstage-rules-commits": {
-      "last_ok": "2026-09-26T00:28:27.168431+00:00",
+      "last_ok": "2026-09-27T00:23:55.890866+00:00",
       "seen": [
         "73c6aa842e05f7c06a42",
         "3ee1cf57dd119a78879c"
@@ -184,12 +184,12 @@
       "used_url": "https://github.com/robocup-junior/onstage-rules/commits/main.atom"
     },
     "world-onstage-rules-releases": {
-      "last_ok": "2026-09-26T00:28:27.427406+00:00",
+      "last_ok": "2026-09-27T00:23:56.117602+00:00",
       "seen": [],
       "used_url": "https://github.com/robocup-junior/onstage-rules/releases.atom"
     },
     "world-soccer-page": {
-      "content_hash": "dc818a49a117b62bb0f6254d2a3542240d291243f81a0df2554f02b8d803e7ff",
+      "content_hash": "007750a4dd2dca199b314e2d0113c7efb012d1866a1c1a6d9e225ca0b782c162",
       "known_links": [
         "https://junior.robocup.org/soccer/",
         "https://junior.forum.robocup.org/c/robocupjunior-soccer/5",
@@ -205,6 +205,7 @@
         "https://github.com/robocup-junior/rcj-soccersim",
         "https://junior.robocup.org/communication-modules/",
         "https://junior.robocup.org/how-to-build-your-own-soccer-field/",
+        "https://junior.forum.robocup.org/t/2027-maximum-team-size/5539",
         "https://junior.forum.robocup.org/t/2027-draft-rules/5532",
         "https://junior.forum.robocup.org/t/bring-back-rcj-soccer-simulation/5469",
         "https://junior.forum.robocup.org/t/rubrics-clarification-update-soccer-rules-2027/5467",
@@ -218,18 +219,18 @@
         "https://junior.forum.robocup.org/t/clarification-of-interference-rules/5185",
         "https://junior.forum.robocup.org/t/clarification-about-amount-of-robots-per-team/5176",
         "https://junior.forum.robocup.org/t/clarification-request-for-rule-8-1-5/4982",
-        "https://junior.forum.robocup.org/t/2027-or-later-robot-size-changes-soccer-rules-2026-2027-2028/4886",
-        "https://junior.forum.robocup.org/t/entry-1vs1-league-kicker-power-clarification-soccer-entry-rules-2026/4884"
+        "https://junior.forum.robocup.org/t/2027-or-later-robot-size-changes-soccer-rules-2026-2027-2028/4886"
       ],
-      "last_ok": "2026-09-26T00:28:29.409241+00:00",
+      "last_ok": "2026-09-27T00:23:58.065001+00:00",
       "seen": [
         "6a78964f8ac0241361ec",
-        "3ebeecc53fe3b6cc9b24"
+        "3ebeecc53fe3b6cc9b24",
+        "cdf5a866b86decee551d"
       ],
       "used_url": "https://junior.robocup.org/soccer/"
     },
     "world-soccer-rules-commits": {
-      "last_ok": "2026-09-26T00:28:26.557441+00:00",
+      "last_ok": "2026-09-27T00:23:55.405836+00:00",
       "seen": [
         "b3af85ee2daa40a235f2",
         "c3230b8256f6505b3ead",
@@ -239,11 +240,11 @@
       "used_url": "https://github.com/robocup-junior/soccer-rules/commits/master.atom"
     },
     "world-soccer-rules-releases": {
-      "last_ok": "2026-09-26T00:28:26.830139+00:00",
+      "last_ok": "2026-09-27T00:23:55.603234+00:00",
       "seen": [],
       "used_url": "https://github.com/robocup-junior/soccer-rules/releases.atom"
     }
   },
-  "updated_at": "2026-09-26T00:28:32.304792+00:00",
+  "updated_at": "2026-09-27T00:24:00.858925+00:00",
   "version": 1
 }
