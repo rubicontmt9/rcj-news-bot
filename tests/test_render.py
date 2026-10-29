@@ -128,6 +128,23 @@ class HealthEmbedTest(unittest.TestCase):
         embed = render.health_embed(results)
         self.assertLess(len(embed["description"]), 300)
 
+    def test_site_maintenance_is_reported_briefly(self):
+        error = (
+            "取得失敗: フィード(https://www.robocup.or.jp/feed/: HTTP Error 503: Service Unavailable; "
+            "https://www.robocup.or.jp/?feed=rss2: HTTP Error 503: Service Unavailable) / "
+            "HTML(https://www.robocup.or.jp/robocup-junior/: HTTP Error 503: Service Unavailable) "
+            "のどちらも取得できません"
+        )
+        embed = render.health_embed([SourceResult("a", "ロボカップ日本委員会", "japan", error=error)])
+        self.assertIn("メンテナンス中", embed["description"])
+        self.assertNotIn("robocup.or.jp", embed["description"])
+        self.assertNotIn("sources.json", embed["footer"]["text"])
+
+    def test_partial_503_is_not_maintenance(self):
+        error = "取得失敗: https://a/: HTTP Error 503: x; https://b/: HTTP Error 404: y"
+        embed = render.health_embed([SourceResult("a", "A", "chiba", error=error)])
+        self.assertNotIn("メンテナンス中", embed["description"])
+
 
 class BuildMessagesTest(unittest.TestCase):
     def setUp(self):

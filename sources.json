@@ -209,6 +209,7 @@
       "kind": "html",
       "enabled": true,
       "urls": [
+        "https://www.robocupjunior.jp/2027amagasaki_rule.html",
         "https://www.robocupjunior.jp/2026aichi_rule.html",
         "https://www.robocupjunior.jp/rule.html",
         "https://www.robocupjunior.jp/2025nagoya_rule.html"

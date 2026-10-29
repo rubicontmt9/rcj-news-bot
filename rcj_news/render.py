@@ -132,6 +132,12 @@ def build_embeds(
     return embeds
 
 
+def _is_maintenance(reason: str) -> bool:
+    """候補 URL がすべて 503 で落ちた（＝サイト全体の一時停止）か。"""
+    attempts = re.findall(r"HTTP(?: Error)? (\d{3})", reason)
+    return bool(attempts) and all(code == "503" for code in attempts)
+
+
 def health_embed(results: list[SourceResult]) -> dict | None:
     """取得できなかった情報源を知らせる embed（問題がある時だけ作る）。"""
     failed = [result for result in results if not result.ok]
@@ -142,6 +148,10 @@ def health_embed(results: list[SourceResult]) -> dict | None:
     lines: list[str] = []
     for result in failed:
         reason = (result.error or "").replace("\n", " ")
+        if _is_maintenance(reason):
+            # サイト側の一時停止は設定を直しても治らないので、URL の羅列ではなく状況だけ伝える
+            lines.append(f"🛠️ **{result.source_name}** — サイトがメンテナンス中（HTTP 503）。復旧すれば自動で再開します")
+            continue
         if len(reason) > 160:
             reason = reason[:159] + "…"
         lines.append(f"❌ **{result.source_name}** — {reason}")
@@ -153,11 +163,19 @@ def health_embed(results: list[SourceResult]) -> dict | None:
         lines = lines[:MAX_HEALTH_LINES] + [f"…ほか {hidden} 件の情報源で問題あり"]
 
     description = "\n".join(lines)[:EMBED_DESCRIPTION_LIMIT]
+    only_maintenance = not stale and all(
+        _is_maintenance(result.error or "") for result in failed
+    )
+    footer = (
+        "サイト側の一時停止です。設定の変更は不要です"
+        if only_maintenance
+        else "sources.json の urls を直すと復活します"
+    )
     return {
         "title": "🔧 情報源の状態",
         "description": description,
         "color": 15105570,
-        "footer": {"text": "sources.json の urls を直すと復活します"},
+        "footer": {"text": footer},
     }
 
 
