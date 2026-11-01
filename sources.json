@@ -82,18 +82,25 @@
       "order": 2
     },
     {
+      "id": "ibaraki",
+      "label": "茨城",
+      "emoji": "🌸",
+      "color": 15105570,
+      "order": 3
+    },
+    {
       "id": "japan",
       "label": "日本",
       "emoji": "🇯🇵",
       "color": 15158332,
-      "order": 3
+      "order": 4
     },
     {
       "id": "world",
       "label": "世界",
       "emoji": "🌏",
       "color": 10181046,
-      "order": 4
+      "order": 5
     }
   ],
   "sources": [
@@ -172,6 +179,37 @@
         "https://rcjj-kanto.org/rule/"
       ],
       "site": "https://rcjj-kanto.org/rule/"
+    },
+    {
+      "id": "ibaraki-block-news",
+      "region": "ibaraki",
+      "name": "茨城ブロックニュース",
+      "kind": "feed",
+      "enabled": true,
+      "urls": [
+        "https://rcjj-ibaraki.com/feed/",
+        "https://rcjj-ibaraki.com/?feed=rss2",
+        "https://rcjj-ibaraki.com/feed/atom/"
+      ],
+      "site": "https://rcjj-ibaraki.com/",
+      "html_fallback": {
+        "url": "https://rcjj-ibaraki.com/",
+        "link_must_contain": [
+          "rcjj-ibaraki.com/20"
+        ],
+        "min_title_length": 6
+      }
+    },
+    {
+      "id": "ibaraki-guidelines",
+      "region": "ibaraki",
+      "name": "茨城ブロック 大会要項",
+      "kind": "watch",
+      "enabled": true,
+      "urls": [
+        "https://rcjj-ibaraki.com/guidelines/"
+      ],
+      "site": "https://rcjj-ibaraki.com/guidelines/"
     },
     {
       "id": "japan-top",
